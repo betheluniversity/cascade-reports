@@ -78,7 +78,7 @@
 			<c:otherwise>
 				<c:forEach var="group" items="${groupRS.rows}">
 					<sql:query var="rs" dataSource="jdbc/CascadeDS">
-						select fce.assetType, fce.cachepath , site.name, acl.groupPermissionsLevel from cxml_foldercontent fce, cxml_aclentry acl, cxml_site site where (acl.groupPermissionsLevel = 1 or acl.groupPermissionsLevel = 2) and acl.groupName = ? and fce.permissionsId = acl.permissionsId and site.id = fce.siteId sort by fce.cachepath
+						select fce.assetType, fce.cachepath , site.name, acl.groupPermissionsLevel from cxml_foldercontent fce, cxml_aclentry acl, cxml_site site where (acl.groupPermissionsLevel = 1 or acl.groupPermissionsLevel = 2) and acl.groupName = ? and fce.permissionsId = acl.permissionsId and site.id = fce.siteId order by fce.cachepath
 						<sql:param value="${group.groupName}" />
 					</sql:query>
 					<div>
