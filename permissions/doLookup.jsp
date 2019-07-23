@@ -104,7 +104,6 @@
 												<td><c:out value="${row.name}" /></td>
 												<td><c:out value="${row.cachePath}" /></td>
 												<td><c:out value="${row.assetType}" /></td>
-												<td><c:out value="${row.groupPermissionsLevel}" /></td>
 												<td>
 													<c:choose>
 														<c:when test="${row.groupPermissionsLevel == 1}">Read</c:when>
