@@ -3,7 +3,7 @@
 
 
 <sql:query var="userRS" dataSource="jdbc/CascadeDS">
-	select fce.assetType, fce.cachepath , site.name from cxml_foldercontent fce, cxml_aclentry acl, cxml_site site where acl.userPermissionsLevel = 2 and acl.userName = ? and fce.permissionsId = acl.permissionsId and site.id = fce.siteId order by site.name, fce.cachepath
+	select fce.assetType, fce.cachepath , site.name from cxml_foldercontent fce, cxml_aclentry acl, cxml_site site where (acl.groupPermissionsLevel = 1 or acl.groupPermissionsLevel = 2) and acl.userName = ? and fce.permissionsId = acl.permissionsId and site.id = fce.siteId order by site.name, fce.cachepath
 
 	<sql:param value="${param.username}" />
 </sql:query>
@@ -78,7 +78,7 @@
 			<c:otherwise>
 				<c:forEach var="group" items="${groupRS.rows}">
 					<sql:query var="rs" dataSource="jdbc/CascadeDS">
-						select fce.assetType, fce.cachepath , site.name from cxml_foldercontent fce, cxml_aclentry acl, cxml_site site where acl.groupPermissionsLevel = 2 and acl.groupName = ? and fce.permissionsId = acl.permissionsId and site.id = fce.siteId 
+						select fce.assetType, fce.cachepath , site.name, acl.groupPermissionsLevel from cxml_foldercontent fce, cxml_aclentry acl, cxml_site site where (acl.groupPermissionsLevel = 1 or acl.groupPermissionsLevel = 2) and acl.groupName = ? and fce.permissionsId = acl.permissionsId and site.id = fce.siteId
 						<sql:param value="${group.groupName}" />
 					</sql:query>
 					<div>
@@ -94,6 +94,7 @@
 											<th>Site</th>
 											<th>Path</th>
 											<th>Type</th>
+											<th>Permissions</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -103,6 +104,13 @@
 												<td><c:out value="${row.name}" /></td>
 												<td><c:out value="${row.cachePath}" /></td>
 												<td><c:out value="${row.assetType}" /></td>
+												<td><c:out value="${row.groupPermissionsLevel}" /></td>
+												<td>
+													<c:choose>
+														<c:when test="${row.groupPermissionsLevel == 1}">Read</c:when>
+                                                                                                		<c:otherwise>Write</c:otherwise>
+                                                                                        		</c:choose>
+												</td>
 											</tr>
 										</c:forEach>
 
