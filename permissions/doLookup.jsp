@@ -23,7 +23,7 @@
 		<div>
 			<h1>User Permissions Lookup: Results</h1>
 			<p>
-				This report shows what the user has <em>write</em> permissions for.
+				This report shows what the user has <em>read and write</em> permissions for.
 				The user might have the permissions assigned directly their user account,
 				or the permission could be attached to a group that the user is a member of.
 			</p>
@@ -33,12 +33,12 @@
 
 		<!-- ************************************************************************ -->
 
-		<h2>Write permissions assigned directly to user</h2>
+		<h2>Permissions assigned directly to user</h2>
 		<div>
 			<c:choose>
 
 				<c:when test="${userRS.rowCount < 1}">
-					<p>No write permissions assigned directly to this user</p>
+					<p>No read/write permissions <em>assigned directly</em> to this user</p>
 				</c:when>
 				<c:otherwise>
 					<table>
@@ -67,7 +67,7 @@
 			</c:choose>
 		</div>
 
-		<h2>Write permissions assigned to groups user belongs to</h2>
+		<h2>Permissions assigned to groups user belongs to</h2>
 		<c:choose>
 
 			<c:when test="${groupRS.rowCount < 1}">
